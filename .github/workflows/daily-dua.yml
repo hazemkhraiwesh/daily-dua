@@ -1,0 +1,21 @@
+name: دعاء يومي
+
+on:
+  schedule:
+    - cron: "0 5 * * *"      # 5 صباحاً UTC = 8 صباحاً بتوقيت السعودية
+  workflow_dispatch:
+    inputs:
+      send:
+        description: "اكتب true للإرسال الفعلي، أو اتركه false للتجربة فقط"
+        default: "false"
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send dua
+        env:
+          WHAPI_TOKEN: ${{ secrets.WHAPI_TOKEN }}
+          SEND: ${{ (github.event_name == 'schedule' || github.event.inputs.send == 'true') && 'true' || 'false' }}
+        run: python3 send_dua.py
