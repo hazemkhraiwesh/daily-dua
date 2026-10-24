@@ -130,7 +130,7 @@ today = datetime.now(timezone(timedelta(hours=3))).date()   # توقيت الس�
 idx = (today - START_DATE).days % len(DUAS)
 if (today - START_DATE).days < 0:
     print("لم يحن موعد البداية بعد:", START_DATE); sys.exit(0)
-text = "🤲 دعاء اليوم\n\n" + DUAS[idx] + "\n\n(%d/100)" % (idx + 1)
+text = DUAS[idx]
 
 groups = call("GET", "https://gate.whapi.cloud/groups?count=500").get("groups", [])
 match = [g for g in groups if norm(g.get("name")) == norm(GROUP_NAME)]
